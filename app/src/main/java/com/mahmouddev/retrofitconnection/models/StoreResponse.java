@@ -3,7 +3,7 @@ package com.mahmouddev.retrofitconnection.models;
 public class StoreResponse {
     String created_at;
     String image;
-    String name;
+    String nameStore;
     String status;
 
     public String getCreated_at() {
@@ -22,12 +22,12 @@ public class StoreResponse {
         this.image = image;
     }
 
-    public String getName() {
-        return name;
+    public String getNameStore() {
+        return nameStore;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameStore(String nameStore) {
+        this.nameStore = nameStore;
     }
 
     public String getStatus() {
@@ -43,7 +43,7 @@ public class StoreResponse {
         return "StoreResponse{" +
                 "created_at='" + created_at + '\'' +
                 ", image='" + image + '\'' +
-                ", name='" + name + '\'' +
+                ", name='" + nameStore + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }
