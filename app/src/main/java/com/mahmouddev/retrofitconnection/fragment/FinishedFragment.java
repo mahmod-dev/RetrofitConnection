@@ -3,6 +3,7 @@ package com.mahmouddev.retrofitconnection.fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.retrofit.APIClient;
 import com.mahmouddev.retrofitconnection.retrofit.APIInterface;
@@ -34,6 +36,12 @@ public class FinishedFragment extends Fragment {
 
     public FinishedFragment(int id) {
         this.id = id;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(getContext());
     }
 
     @Override

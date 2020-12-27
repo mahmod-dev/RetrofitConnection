@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mahmouddev.retrofitconnection.fragment.HomeFragment;
 import com.mahmouddev.retrofitconnection.fragment.ProfileFragment;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseApp.initializeApp(this);
         loadFragment(new HomeFragment());
         BottomNavigationView navigation = findViewById(R.id.bottomNav);
         navigation.setOnNavigationItemSelectedListener(this);

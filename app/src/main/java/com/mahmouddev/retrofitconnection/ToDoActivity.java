@@ -5,6 +5,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.adapter.ViewPagerFragmentAdapter;
 
@@ -15,6 +16,7 @@ public class ToDoActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
+        FirebaseApp.initializeApp(this);
         String[] titles = new String[]{"In progress", "Finished"};
         getSupportActionBar().setElevation(0);
         ViewPager2 viewPager2 = findViewById(R.id.viewPager2);

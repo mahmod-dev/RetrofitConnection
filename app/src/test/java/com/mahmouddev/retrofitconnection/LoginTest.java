@@ -15,8 +15,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.concurrent.CountDownLatch;
-
 import static com.mahmouddev.retrofitconnection.util.Helper.ERR_DIGIT;
 import static com.mahmouddev.retrofitconnection.util.Helper.ERR_EMAIL;
 import static com.mahmouddev.retrofitconnection.util.Helper.ERR_LENGTH;
@@ -34,13 +32,11 @@ public class LoginTest {
     Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     DbHelper dbHelper;
-    DbResource dbResource;
 
 
     @Before
     public void beforeTest() {
         dbHelper = new DbHelper(appContext);
-        dbResource = new DbResource();
     }
 
     @Test
@@ -50,7 +46,7 @@ public class LoginTest {
             @Override
             public void execute() throws Throwable {
                 Users users = TestUtil.invalidUserEmail;
-                dbResource.validate(users);
+                DbResource.validate(users);
                 dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
 
             }
@@ -66,7 +62,7 @@ public class LoginTest {
             @Override
             public void execute() throws Throwable {
                 Users users = TestUtil.invalidUserMobile;
-                dbResource.validate(users);
+                DbResource.validate(users);
                 dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
 
             }
@@ -83,8 +79,8 @@ public class LoginTest {
             @Override
             public void execute() throws Throwable {
                 Users users = TestUtil.invalidUserPasswordLength;
-                dbResource.validate(users);
-                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+                DbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getEmail(), users.getPassword(), users.getPhone());
 
             }
         });
@@ -99,8 +95,8 @@ public class LoginTest {
             @Override
             public void execute() throws Throwable {
                 Users users = TestUtil.invalidUserPasswordUpperCase;
-                dbResource.validate(users);
-                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+                DbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getEmail(), users.getPassword(), users.getPhone());
 
             }
         });
@@ -113,8 +109,8 @@ public class LoginTest {
 
         Exception exception = assertThrows(Exception.class, () -> {
             Users users = TestUtil.invalidUserPasswordLowerCase;
-            dbResource.validate(users);
-            dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+            DbResource.validate(users);
+            dbHelper.insert(users.getUsername(), users.getEmail(), users.getPassword(), users.getPhone());
 
         });
 
@@ -128,8 +124,8 @@ public class LoginTest {
             @Override
             public void execute() throws Throwable {
                 Users users = TestUtil.invalidUserPasswordDigit;
-                dbResource.validate(users);
-                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+                DbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getEmail(), users.getPassword(), users.getPhone());
 
             }
         });
@@ -144,8 +140,8 @@ public class LoginTest {
             @Override
             public void execute() throws Throwable {
                 Users users = TestUtil.invalidUserPasswordSpecialChar;
-                dbResource.validate(users);
-                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+                DbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getEmail(), users.getPassword(), users.getPhone());
 
             }
         });
@@ -157,8 +153,8 @@ public class LoginTest {
     public void insert_valid() throws Exception {
 
         Users users = TestUtil.validUser;
-        dbResource.validate(users);
-        assertTrue(dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone()));
+        DbResource.validate(users);
+        assertTrue(dbHelper.insert(users.getUsername(), users.getEmail(), users.getPassword(), users.getPhone()));
         assertEquals("mahmoud", users.getUsername());
         assertEquals("mahmoud@gmail.com", users.getEmail());
         assertEquals("123@@@GGh", users.getPassword());

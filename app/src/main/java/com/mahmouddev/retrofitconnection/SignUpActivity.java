@@ -15,13 +15,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.database.DbHelper;
+import com.mahmouddev.retrofitconnection.database.DbResource;
 import com.mahmouddev.retrofitconnection.fragment.HomeFragment;
 import com.mahmouddev.retrofitconnection.fragment.ProfileFragment;
+import com.mahmouddev.retrofitconnection.models.Users;
 
 public class SignUpActivity extends AppCompatActivity {
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class SignUpActivity extends AppCompatActivity {
         EditText etMobile = findViewById(R.id.etMobile);
         Button btnRegister = findViewById(R.id.btnRegister);
         TextView btnLogin = findViewById(R.id.btnLogin);
+        FirebaseApp.initializeApp(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         btnRegister.setOnClickListener(view -> {
             String email = etEmail.getText().toString();
@@ -42,39 +48,51 @@ public class SignUpActivity extends AppCompatActivity {
             String mobile = etMobile.getText().toString();
             if (email == null) {
                 etEmail.setError("Empty Email!");
-                FirebaseCrashlytics.getInstance().setCustomKey("email","Empty Email!");
+                FirebaseCrashlytics.getInstance().setCustomKey("email", "Empty Email!");
                 return;
 
             }
 
             if (mobile == null) {
                 etMobile.setError("Empty Mobile!");
-                FirebaseCrashlytics.getInstance().setCustomKey("Mobile","Empty Mobile!");
+                FirebaseCrashlytics.getInstance().setCustomKey("Mobile", "Empty Mobile!");
                 return;
 
             }
 
             if (username == null) {
                 etUsername.setError("Empty Username!");
-                FirebaseCrashlytics.getInstance().setCustomKey("Username","Empty Username!");
+                FirebaseCrashlytics.getInstance().setCustomKey("Username", "Empty Username!");
 
                 return;
 
             }
             if (password == null) {
-                FirebaseCrashlytics.getInstance().setCustomKey("Password","Password Username!");
+                FirebaseCrashlytics.getInstance().setCustomKey("Password", "Password Username!");
                 etPassword.setError("Empty Password!");
                 return;
 
             }
-            if (dbHelper.insert(username, email, password,mobile)){
-                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "sign up successfully, please login", Toast.LENGTH_SHORT).show();
-            }
 
+            Users users = new Users();
+            users.setPhone(mobile);
+            users.setEmail(email);
+            users.setPassword(password);
+            users.setUsername(username);
+            try {
+                DbResource.validate(users);
+                if (dbHelper.insert(users.getUsername(), users.getEmail(), users.getPassword(), users.getPhone())) {
+                    Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "sign up successfully, please login", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                FirebaseCrashlytics.getInstance().recordException(e);
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
 
         btnLogin.setOnClickListener(view -> {

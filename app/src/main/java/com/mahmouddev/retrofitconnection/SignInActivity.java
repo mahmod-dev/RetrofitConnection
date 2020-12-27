@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.database.DbHelper;
 import com.mahmouddev.retrofitconnection.models.Users;
@@ -26,6 +27,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        FirebaseApp.initializeApp(this);
         MyPreferences.setContext(getApplicationContext());
         if (MyPreferences.getBool("isRem")) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
