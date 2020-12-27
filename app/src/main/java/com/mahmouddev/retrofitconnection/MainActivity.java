@@ -1,6 +1,7 @@
 package com.mahmouddev.retrofitconnection;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mahmouddev.retrofitconnection.fragment.HomeFragment;
 import com.mahmouddev.retrofitconnection.fragment.ProfileFragment;
 
+@VisibleForTesting
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 

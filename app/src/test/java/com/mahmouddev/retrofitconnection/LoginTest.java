@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class LoginTest {
     Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-    CountDownLatch latch = new CountDownLatch(1);
     DbHelper dbHelper;
     DbResource dbResource;
 
@@ -42,11 +41,6 @@ public class LoginTest {
     public void beforeTest() {
         dbHelper = new DbHelper(appContext);
         dbResource = new DbResource();
-    }
-
-    @Test
-    public void test_insert() {
-        // dbHelper.insert("mahmoud", "mahmoud@gmail.com", "123456", "0597796100");
     }
 
     @Test
@@ -117,14 +111,11 @@ public class LoginTest {
     @Test
     public void insert_invalidPassword_lower() throws Exception {
 
-        Exception exception = assertThrows(Exception.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                Users users = TestUtil.invalidUserPasswordLowerCase;
-                dbResource.validate(users);
-                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+        Exception exception = assertThrows(Exception.class, () -> {
+            Users users = TestUtil.invalidUserPasswordLowerCase;
+            dbResource.validate(users);
+            dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
 
-            }
         });
 
         assertEquals(ERR_LOW_CASE_CHAR, exception.getMessage());

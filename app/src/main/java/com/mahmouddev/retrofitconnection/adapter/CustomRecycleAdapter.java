@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahmouddev.retrofitconnection.R;
@@ -59,7 +58,7 @@ public class CustomRecycleAdapter extends RecyclerView.Adapter<CustomRecycleAdap
         return data.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
         TextView tvEmail;
         TextView tvWebsite;

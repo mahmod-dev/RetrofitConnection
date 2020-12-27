@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vew = inflater.inflate(R.layout.fragment_home, container, false);
-        rv = vew.findViewById(R.id.rv);
+        rv = vew.findViewById(R.id.rvHome);
         progressDoalog = new ProgressDialog(getContext());
         progressDoalog.setMessage("Loading....");
         progressDoalog.show();
@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
 
         adapter.setOnClickListener(id -> {
             Intent intent = new Intent(getContext(), ToDoActivity.class);
-            intent.putExtra("id",id);
+            intent.putExtra("id", id);
             startActivity(intent);
 
         });

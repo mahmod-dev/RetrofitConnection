@@ -37,7 +37,7 @@ public class FinishedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vew =  inflater.inflate(R.layout.fragment_finished, container, false);
-        rv = vew.findViewById(R.id.rv);
+        rv = vew.findViewById(R.id.rvFinished);
         progressDoalog = new ProgressDialog(getContext());
         progressDoalog.setMessage("Loading....");
         progressDoalog.show();

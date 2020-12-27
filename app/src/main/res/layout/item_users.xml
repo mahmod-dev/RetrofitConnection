@@ -2,13 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    app:cardCornerRadius="8dp"
-    android:background="@color/colorWhite"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/_5sdp"
+    android:background="@color/colorWhite"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:layout_height="wrap_content">
+    app:cardCornerRadius="8dp">
 
 
     <RelativeLayout
@@ -76,7 +76,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_2sdp"
                 android:padding="@dimen/_2sdp"
-                android:text="street" />
+                android:text="street"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/tvSuite"
@@ -84,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_2sdp"
                 android:padding="@dimen/_2sdp"
-                android:text="suite" />
+                android:text="suite"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/tvCity"
@@ -92,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_2sdp"
                 android:padding="@dimen/_2sdp"
-                android:text="city" />
+                android:text="city"
+                android:textColor="#000" />
 
 
         </LinearLayout>

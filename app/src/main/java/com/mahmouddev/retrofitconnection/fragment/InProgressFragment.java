@@ -42,7 +42,7 @@ public class InProgressFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_in_progress, container, false);
         APIInterface service = APIClient.getRetrofitInstance().create(APIInterface.class);
-        rv = view.findViewById(R.id.rv);
+        rv = view.findViewById(R.id.rvProgress);
         progressDoalog = new ProgressDialog(getContext());
         progressDoalog.setMessage("Loading....");
         progressDoalog.show();
