@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.database.DbHelper;
 import com.mahmouddev.retrofitconnection.fragment.HomeFragment;
 import com.mahmouddev.retrofitconnection.fragment.ProfileFragment;
@@ -32,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
         EditText etMobile = findViewById(R.id.etMobile);
         Button btnRegister = findViewById(R.id.btnRegister);
         TextView btnLogin = findViewById(R.id.btnLogin);
+
         btnRegister.setOnClickListener(view -> {
             String email = etEmail.getText().toString();
             String username = etUsername.getText().toString();
@@ -39,22 +42,27 @@ public class SignUpActivity extends AppCompatActivity {
             String mobile = etMobile.getText().toString();
             if (email == null) {
                 etEmail.setError("Empty Email!");
+                FirebaseCrashlytics.getInstance().setCustomKey("email","Empty Email!");
                 return;
 
             }
 
             if (mobile == null) {
                 etMobile.setError("Empty Mobile!");
+                FirebaseCrashlytics.getInstance().setCustomKey("Mobile","Empty Mobile!");
                 return;
 
             }
 
             if (username == null) {
                 etUsername.setError("Empty Username!");
+                FirebaseCrashlytics.getInstance().setCustomKey("Username","Empty Username!");
+
                 return;
 
             }
             if (password == null) {
+                FirebaseCrashlytics.getInstance().setCustomKey("Password","Password Username!");
                 etPassword.setError("Empty Password!");
                 return;
 

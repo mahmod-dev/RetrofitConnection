@@ -10,12 +10,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mahmouddev.retrofitconnection.fragment.HomeFragment;
 import com.mahmouddev.retrofitconnection.fragment.ProfileFragment;
 
 @VisibleForTesting
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
+    FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

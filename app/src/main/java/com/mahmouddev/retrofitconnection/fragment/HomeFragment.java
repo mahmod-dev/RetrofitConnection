@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.retrofit.APIClient;
 import com.mahmouddev.retrofitconnection.retrofit.APIInterface;
 import com.mahmouddev.retrofitconnection.R;
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<ArrayList<UsersResponse>> call, Throwable t) {
                 progressDoalog.dismiss();
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
+                FirebaseCrashlytics.getInstance().recordException(t);
             }
 
         });

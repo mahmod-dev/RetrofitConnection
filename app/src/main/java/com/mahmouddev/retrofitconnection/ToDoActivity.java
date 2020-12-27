@@ -5,11 +5,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.adapter.ViewPagerFragmentAdapter;
 
 
 public class ToDoActivity extends AppCompatActivity  {
-
+    int id ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +19,15 @@ public class ToDoActivity extends AppCompatActivity  {
         getSupportActionBar().setElevation(0);
         ViewPager2 viewPager2 = findViewById(R.id.viewPager2);
         TabLayout tab_layout = findViewById(R.id.tab_layout);
-        int id = getIntent().getExtras().getInt("id");
+
+        try {
+            id = getIntent().getExtras().getInt("id");
+
+        }catch (Exception ex){
+            FirebaseCrashlytics.getInstance().recordException(ex);
+
+
+        }
 
         viewPager2.setAdapter(new ViewPagerFragmentAdapter(this,id));
         // attaching tab mediator

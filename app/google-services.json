@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "719374606636",
+    "firebase_url": "https://tensorflow-example-e16fb.firebaseio.com",
+    "project_id": "tensorflow-example-e16fb",
+    "storage_bucket": "tensorflow-example-e16fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719374606636:android:5cf5bd3417f72618ac4c89",
+        "android_client_info": {
+          "package_name": "com.android.tensorflow_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719374606636-uoguns02c1svaejuehk4gnl7pqm6itiv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtwdPSz8fM6QTM0b8p4Q_veMeM3hYg5hY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719374606636-uoguns02c1svaejuehk4gnl7pqm6itiv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

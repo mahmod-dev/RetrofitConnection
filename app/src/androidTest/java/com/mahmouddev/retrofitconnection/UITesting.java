@@ -5,11 +5,13 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
+
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -26,14 +28,13 @@ public class UITesting {
     public ActivityTestRule<MainActivity> activityActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
 
-
     @Test
     public void test_isListVisible() {
         onView(withId(R.id.rvHome)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void  test_listHome_listProgress() {
+    public void test_listHome_listProgress() {
 
         onView(withId(R.id.rvHome))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -43,7 +44,7 @@ public class UITesting {
     }
 
     @Test
-    public void  test_listHome_listProgress_backPress() {
+    public void test_listHome_listProgress_backPress() {
 
         onView(withId(R.id.rvHome))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));

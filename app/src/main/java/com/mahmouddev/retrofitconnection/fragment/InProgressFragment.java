@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.retrofit.APIClient;
 import com.mahmouddev.retrofitconnection.retrofit.APIInterface;
 import com.mahmouddev.retrofitconnection.R;
@@ -62,7 +63,7 @@ public class InProgressFragment extends Fragment {
             public void onFailure(Call<ArrayList<TodoResponse>> call, Throwable t) {
                 progressDoalog.dismiss();
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
+                FirebaseCrashlytics.getInstance().recordException(t);
             }
 
         });

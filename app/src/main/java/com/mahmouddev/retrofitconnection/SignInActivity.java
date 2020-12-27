@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.mahmouddev.retrofitconnection.database.DbHelper;
 import com.mahmouddev.retrofitconnection.models.Users;
 import com.mahmouddev.retrofitconnection.util.MyPreferences;
@@ -68,10 +69,15 @@ public class SignInActivity extends AppCompatActivity {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     } else {
+                        FirebaseCrashlytics.getInstance().log("Dont find user");
+
                         Toast.makeText(SignInActivity.this, "Try Again!", Toast.LENGTH_SHORT).show();
                     }
-                } else
+                } else{
+                    FirebaseCrashlytics.getInstance().log("doesnt exsits Please Sign up ");
                     Toast.makeText(SignInActivity.this, "doesnt exsits Please Sign up ", Toast.LENGTH_SHORT).show();
+
+                }
 
 
             }

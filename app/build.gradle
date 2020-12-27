@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.firebase.crashlytics'
+
 }
 
 android {
@@ -7,7 +9,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.mahmouddev.retrofitconnection"
+        applicationId "com.android.tensorflow_example"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
@@ -91,4 +93,11 @@ dependencies {
     androidTestImplementation ('com.android.support.test:runner:1.0.2'){
         exclude module: 'support-annotations'
     }
+
+
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
 }
