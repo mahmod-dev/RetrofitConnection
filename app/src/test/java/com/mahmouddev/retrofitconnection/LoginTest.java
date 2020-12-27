@@ -1,151 +1,179 @@
 package com.mahmouddev.retrofitconnection;
 
-import com.mahmouddev.retrofitconnection.models.LoginPost;
-import com.mahmouddev.retrofitconnection.models.LoginResponse;
-import com.mahmouddev.retrofitconnection.models.StoreResponse;
+import android.content.Context;
 
-import org.junit.Assert;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.mahmouddev.retrofitconnection.database.DbHelper;
+import com.mahmouddev.retrofitconnection.database.DbResource;
+import com.mahmouddev.retrofitconnection.models.Users;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.concurrent.CountDownLatch;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import static com.mahmouddev.retrofitconnection.util.Helper.ERR_DIGIT;
+import static com.mahmouddev.retrofitconnection.util.Helper.ERR_EMAIL;
+import static com.mahmouddev.retrofitconnection.util.Helper.ERR_LENGTH;
+import static com.mahmouddev.retrofitconnection.util.Helper.ERR_LOW_CASE_CHAR;
+import static com.mahmouddev.retrofitconnection.util.Helper.ERR_MOBILE;
+import static com.mahmouddev.retrofitconnection.util.Helper.ERR_SPECIAL_CHAR;
+import static com.mahmouddev.retrofitconnection.util.Helper.ERR_UPPER_CASE_CHAR;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(manifest = Config.NONE)
 public class LoginTest {
+    Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     CountDownLatch latch = new CountDownLatch(1);
-    LoginResponse loginResponse;
-    StoreResponse storeResponse;
+    DbHelper dbHelper;
+    DbResource dbResource;
+
 
     @Before
     public void beforeTest() {
-        loginResponse = new LoginResponse();
-        storeResponse = new StoreResponse();
+        dbHelper = new DbHelper(appContext);
+        dbResource = new DbResource();
     }
 
-    // test successful
     @Test
-    public void login_Successful() throws Exception {
-        LoginPost post = new LoginPost();
-        post.setEmail("aaaa@gmail.com");
-        post.setPassword("123456");
-        post.setDevice_type("android");
-        post.setFcm_token("sssasas");
-
-
-        APIInterface service = APIClient.getRetrofitInstance().create(APIInterface.class);
-        Call<LoginResponse> call = service.login(post);
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                loginResponse = response.body();
-                latch.countDown();
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-
-            }
-
-        });
-
-        latch.await();
-        Assert.assertNotNull(loginResponse);
-        Assert.assertEquals("aaaa@gmail.com", loginResponse.getUser().getEmail());
-        Assert.assertEquals(200, loginResponse.getCode());
+    public void test_insert() {
+        // dbHelper.insert("mahmoud", "mahmoud@gmail.com", "123456", "0597796100");
     }
 
-
-    //test Failed (wrong email)
     @Test
-    public void login_Failed_wrongEmail() throws Exception {
-        LoginPost post = new LoginPost();
-        post.setEmail("aabb@gmail.com");
-        post.setPassword("123456");
-        post.setDevice_type("android");
-        post.setFcm_token("sssasas");
+    public void insert_invalidEmail() throws Exception {
 
-
-        APIInterface service = APIClient.getRetrofitInstance().create(APIInterface.class);
-        Call<LoginResponse> call = service.login(post);
-        call.enqueue(new Callback<LoginResponse>() {
+        Exception exception = assertThrows(Exception.class, new Executable() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                loginResponse = response.body();
-                latch.countDown();
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void execute() throws Throwable {
+                Users users = TestUtil.invalidUserEmail;
+                dbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
 
             }
-
         });
 
-        latch.await();
-        Assert.assertNull("Opss! object is null", loginResponse.getUser());
-        Assert.assertEquals(210, loginResponse.getCode());
+        assertEquals(ERR_EMAIL, exception.getMessage());
     }
 
-
-    //test Failed (null email and password)
     @Test
-    public void login_Failed_nullEmailPassword() throws Exception {
-        LoginPost post = new LoginPost();
-        post.setEmail(null);
-        post.setPassword(null);
-        post.setDevice_type("android");
-        post.setFcm_token("sssasas");
+    public void insert_invalidMobile() throws Exception {
 
-
-        APIInterface service = APIClient.getRetrofitInstance().create(APIInterface.class);
-        Call<LoginResponse> call = service.login(post);
-        call.enqueue(new Callback<LoginResponse>() {
+        Exception exception = assertThrows(Exception.class, new Executable() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                loginResponse = response.body();
-                latch.countDown();
-            }
+            public void execute() throws Throwable {
+                Users users = TestUtil.invalidUserMobile;
+                dbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                System.out.println("Error: " + t.getMessage());
-                //  Log.e("TAG", "onFailure: "+t.getMessage() );
             }
-
         });
 
-        latch.await();
-        Assert.assertNull("Opss! object is null", loginResponse.getUser());
-        Assert.assertEquals(210, loginResponse.getCode());
-        Assert.assertFalse("status false", loginResponse.isStatus());
+        assertEquals(ERR_MOBILE, exception.getMessage());
     }
 
 
     @Test
-    public void getStores_Successful() throws Exception {
+    public void insert_invalidPassword_length() throws Exception {
 
-
-        APIInterface service = APIClient.getRetrofitInstance().create(APIInterface.class);
-        Call<StoreResponse> call = service.getActivities();
-        call.enqueue(new Callback<StoreResponse>() {
+        Exception exception = assertThrows(Exception.class, new Executable() {
             @Override
-            public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
-                storeResponse = response.body();
-                latch.countDown();
-            }
+            public void execute() throws Throwable {
+                Users users = TestUtil.invalidUserPasswordLength;
+                dbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
 
-            @Override
-            public void onFailure(Call<StoreResponse> call, Throwable t) {
-                latch.countDown();
             }
-
         });
 
-        latch.await();
-        Assert.assertNotNull(storeResponse);
+        assertEquals(ERR_LENGTH, exception.getMessage());
     }
+
+    @Test
+    public void insert_invalidPassword_upper() throws Exception {
+
+        Exception exception = assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                Users users = TestUtil.invalidUserPasswordUpperCase;
+                dbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+
+            }
+        });
+
+        assertEquals(ERR_UPPER_CASE_CHAR, exception.getMessage());
+    }
+
+    @Test
+    public void insert_invalidPassword_lower() throws Exception {
+
+        Exception exception = assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                Users users = TestUtil.invalidUserPasswordLowerCase;
+                dbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+
+            }
+        });
+
+        assertEquals(ERR_LOW_CASE_CHAR, exception.getMessage());
+    }
+
+    @Test
+    public void insert_invalidPassword_digit() throws Exception {
+
+        Exception exception = assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                Users users = TestUtil.invalidUserPasswordDigit;
+                dbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+
+            }
+        });
+
+        assertEquals(ERR_DIGIT, exception.getMessage());
+    }
+
+    @Test
+    public void insert_invalidPassword_special() throws Exception {
+
+        Exception exception = assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                Users users = TestUtil.invalidUserPasswordSpecialChar;
+                dbResource.validate(users);
+                dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone());
+
+            }
+        });
+
+        assertEquals(ERR_SPECIAL_CHAR, exception.getMessage());
+    }
+
+    @Test
+    public void insert_valid() throws Exception {
+
+        Users users = TestUtil.validUser;
+        dbResource.validate(users);
+        assertTrue(dbHelper.insert(users.getUsername(), users.getPassword(), users.getEmail(), users.getPhone()));
+        assertEquals("mahmoud", users.getUsername());
+        assertEquals("mahmoud@gmail.com", users.getEmail());
+        assertEquals("123@@@GGh", users.getPassword());
+        assertEquals("0597796100", users.getPhone());
+
+    }
+
+
 }

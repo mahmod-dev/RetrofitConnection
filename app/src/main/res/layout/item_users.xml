@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="8dp"
+    android:background="@color/colorWhite"
+    android:layout_margin="@dimen/_5sdp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_2sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:padding="@dimen/_2sdp"
+            android:text="name"
+            app:drawableStartCompat="@drawable/ic_person"
+            app:drawableTint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_margin="@dimen/_2sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:padding="@dimen/_2sdp"
+            android:text="email"
+            app:drawableStartCompat="@drawable/ic_email"
+            app:drawableTint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvEmail"
+            android:layout_margin="@dimen/_2sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:padding="@dimen/_2sdp"
+            android:text="phone"
+            app:drawableStartCompat="@drawable/ic_icon_sheet_phone" />
+
+        <TextView
+            android:id="@+id/tvWebsite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPhone"
+            android:layout_margin="@dimen/_2sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:padding="@dimen/_2sdp"
+            android:text="website"
+            app:drawableStartCompat="@drawable/ic_web"
+            app:drawableTint="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/linAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvStreet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                android:padding="@dimen/_2sdp"
+                android:text="street" />
+
+            <TextView
+                android:id="@+id/tvSuite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                android:padding="@dimen/_2sdp"
+                android:text="suite" />
+
+            <TextView
+                android:id="@+id/tvCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_2sdp"
+                android:padding="@dimen/_2sdp"
+                android:text="city" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
